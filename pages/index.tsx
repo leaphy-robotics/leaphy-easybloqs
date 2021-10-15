@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
         <div className={styles.grid}>
           <div className={styles.card}>
-            <Link href="/blockly" >
+            <Link href="/blockly/orig">
               <a>
                 <Image src="/orig.svg" alt="Leaphy Original Icon" width={180} height={180} />
                 Leaphy Original
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           </div>
 
           <div className={styles.card}>
-            <Link href="/blockly" >
+            <Link href="/blockly/flitz" >
               <a>
                 <Image src="/flitz.svg" alt="Leaphy Flitz Icon" width={180} height={180} />
                 Leaphy Flitz
@@ -42,19 +42,10 @@ const Home: NextPage = () => {
           </div>
 
           <div className={styles.card}>
-            <Link href="/blockly" >
+            <Link href="/blockly/click" >
               <a>
                 <Image src="/click.svg" alt="Leaphy Click Icon" width={180} height={180} />
                 Leaphy Click
-              </a>
-            </Link>
-          </div>
-
-          <div className={styles.card}>
-            <Link href="/blockly" >
-              <a>
-                <Image src="/uno.svg" alt="Arduino Uno Icon" width={180} height={180} />
-                Arduino UNO
               </a>
             </Link>
           </div>
@@ -75,14 +66,6 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
-}
-
-export async function getStaticProps() {
-  return {
-    props: {
-      postData
-    }
-  }
 }
 
 export default Home
