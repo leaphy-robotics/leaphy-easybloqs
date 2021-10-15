@@ -1,0 +1,16 @@
+.blocklyContainer {
+  display: flex;
+}
+
+.blocklyView {
+  height: 1000px;
+  display: block;
+  width: 70%;
+}
+
+.codeView {
+  height: 1000px;
+  display: block;
+  width: 30%;
+
+}
