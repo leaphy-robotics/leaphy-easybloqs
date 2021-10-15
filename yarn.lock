@@ -2343,19 +2343,19 @@ language-tags@^1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
-leaphy-blockly@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/leaphy-blockly/-/leaphy-blockly-0.0.17.tgz#7b2d890be2152843e508360e7539d071831e48c0"
-  integrity sha512-Ny9yrBfhIFmcb3sUvvLEDa8rEb5L2kW42Uu9UOW0QUsoTZjRix1MUyO8Z4j/VWeeoVAqrGoSuGSgQWRPKXfX8w==
+leaphy-blockly@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/leaphy-blockly/-/leaphy-blockly-0.0.22.tgz#5d9cd1d20fb1c6323d49a2167e9acfe081e188b0"
+  integrity sha512-NAQJgdMlJpNX2tui/EzuYE03cBZU9EiQLThbocpHg/ptaGX/907EFQjxOI5NdpQsuEj3dEUIoA8eznwjhwi2Bg==
   dependencies:
     jsdom "15.2.1"
 
-leaphy-react-blockly@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/leaphy-react-blockly/-/leaphy-react-blockly-0.0.7.tgz#d09d875512332f929def9e8f868365891ffc9116"
-  integrity sha512-NBRU6Dh28NofAn9dU5BTQmMYn4OZA8OWq3/e5/mZxoAcb2iuazeBRq+4uJRbx68se1a/IA5tULhuWS36DzbD1g==
+leaphy-react-blockly@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/leaphy-react-blockly/-/leaphy-react-blockly-0.0.9.tgz#459b79dabe6b2528dc800a5ee800e8a4dac0237e"
+  integrity sha512-3AUp262Xrfhx2oaKC2wgLHiWwF/NSy92yzJJ+xXNePGiItlRcUrrjIccTL4ppPOHgMzOIUH7EGMpxJUCgxKaGw==
   dependencies:
-    leaphy-blockly "^0.0.17"
+    leaphy-blockly "^0.0.22"
     prop-types "^15.7.2"
 
 levn@^0.4.1:
