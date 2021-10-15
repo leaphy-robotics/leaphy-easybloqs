@@ -4,7 +4,13 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
+import { useAppDispatch } from '../redux/hooks'
+import { setRobot } from '../features/blockly/blocklySlice'
+
 const Home: NextPage = () => {
+
+  const dispatch = useAppDispatch()
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,7 +31,7 @@ const Home: NextPage = () => {
         <div className={styles.grid}>
           <div className={styles.card}>
             <Link href="/blockly/orig">
-              <a>
+              <a onClick={() => dispatch(setRobot('orig'))}>
                 <Image src="/orig.svg" alt="Leaphy Original Icon" width={180} height={180} />
                 Leaphy Original
               </a>

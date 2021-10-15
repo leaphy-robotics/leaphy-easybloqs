@@ -1,12 +1,13 @@
 import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
 import { useRef, useState, useEffect } from 'react'
-import categories from '../../toolboxes/categories';
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
 import styles from '../../styles/Editor.module.css'
+
+import { selectToolbox } from '../features/blockly/blocklySlice'
+import { useAppSelector } from '../../redux/hooks'
 
 const initialXml =
     `<xml xmlns="https://developers.google.com/blockly/xml">
@@ -14,8 +15,10 @@ const initialXml =
 </xml>`;
 
 const Robot: NextPage = () => {
-    const router = useRouter()
-    const { robot } = router.query
+
+    const toolbox = useAppSelector(selectToolbox);
+    console.log(toolbox);
+
     const onWorkspaceChange = (workspace: any) => {
         const updatedCode = Blockly.Arduino.workspaceToCode(workspace);
         setCode(updatedCode);
@@ -104,7 +107,7 @@ const Robot: NextPage = () => {
     const blocklyRef = useRef(null);
     useBlocklyWorkspace({
         ref: blocklyRef,
-        toolboxConfiguration: categories,
+        toolboxConfiguration: toolbox,
         initialXml: initialXml,
         className: "fill-height",
         onWorkspaceChange: onWorkspaceChange
