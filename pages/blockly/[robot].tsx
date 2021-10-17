@@ -1,12 +1,15 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
 import { useRef, useState, useEffect } from 'react'
-import categories from '../../toolboxes/categories';
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
 import styles from '../../styles/Editor.module.css'
+
+import { origToolbox, flitzToolbox, clickToolbox } from '../../toolboxes/toolboxes'
+
 
 const initialXml =
     `<xml xmlns="https://developers.google.com/blockly/xml">
@@ -16,17 +19,24 @@ const initialXml =
 const Robot: NextPage = () => {
     const router = useRouter()
     const { robot } = router.query
-    const onWorkspaceChange = (workspace: any) => {
-        const updatedCode = Blockly.Arduino.workspaceToCode(workspace);
-        setCode(updatedCode);
-    };
+
+    const selectToolbox = (robot: string) => {
+        switch (robot) {
+            case 'orig':
+                return origToolbox;
+            case 'flitz':
+                return flitzToolbox;
+            case 'click':
+                return clickToolbox;
+            default:
+                break;
+        }
+    }
+
+    const toolbox = selectToolbox(robot as string);
 
     const [code, setCode] = useState<string>('');
     const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
-
-    const onUploadClicked = () => {
-        setIsUploadClicked(true);
-    }
 
     useEffect(() => {
 
@@ -45,17 +55,17 @@ const Robot: NextPage = () => {
                 mode: "cors",
                 redirect: "follow",
                 headers: {
-                    "content-type": "application/json" 
+                    "content-type": "application/json"
                 }
             }
 
             let compileResponse;
-            try{
+            try {
                 compileResponse = await fetch("https://c0lz7poj8g.execute-api.eu-west-1.amazonaws.com", request);
-            } catch(err){
+            } catch (err) {
                 throw new Error("Something went wrong");
             }
-            
+
             const responseJson = await compileResponse.json();
             console.log(responseJson);
             const binaryFetchResponse = await fetch(responseJson.binaryLocation);
@@ -99,18 +109,27 @@ const Robot: NextPage = () => {
 
     }, [isUploadClicked, code])
 
-
-
     const blocklyRef = useRef(null);
+
+    const onWorkspaceChange = (workspace: any) => {
+        const updatedCode = Blockly.Arduino.workspaceToCode(workspace);
+        setCode(updatedCode);
+    };
+
     useBlocklyWorkspace({
         ref: blocklyRef,
-        toolboxConfiguration: categories,
+        toolboxConfiguration: toolbox,
         initialXml: initialXml,
         className: "fill-height",
         onWorkspaceChange: onWorkspaceChange
     });
+
+    const onUploadClicked = () => {
+        setIsUploadClicked(true);
+    }
+
     return (
-        
+
         <div className={styles.blocklyContainer}>
             <div ref={blocklyRef} className={styles.blocklyView} />
             <div className={styles.codeView}>
