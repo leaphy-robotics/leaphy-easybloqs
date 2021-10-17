@@ -3,7 +3,7 @@ import styles from '../../styles/Header.module.css'
 
 const Header = () => {
     return(<div className={styles.container}>
-        <Image src="/leaphy-logo.svg" alt="Leaphy Easybloqs Logo" width={72} height={16} />
+        <Image className={styles.logo} src="/leaphy-logo.svg" alt="Leaphy Easybloqs Logo" width={224} height={18} />
     </div>)
 }
 
