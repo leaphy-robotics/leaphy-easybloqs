@@ -1,6 +1,7 @@
 import sep from './separator';
+import { leaphySerialBlocks, leaphyIoDigitalWriteBlock, leaphyIoAnalogWriteBlock, leaphyServoWriteBlock, leaphyDigitalAnalogReadBlocks, leaphyBuzzBlock, leaphySonarBlock, leaphyRgbBlocks, leaphyLedBlocks } from './blocks-l_common';
 
-const leaphyOriginalBlocks = [
+export const leaphyOriginalBlocks = [
     {
         kind: "block",
         type: "leaphy_original_set_led",
@@ -51,72 +52,26 @@ const leaphyOriginalBlocks = [
     </block>`
     },
     sep,
-    {
-        kind: "block",
-        type: "leaphy_original_buzz",
-        blockxml: `<block type="leaphy_original_buzz">
-        <value name="FREQUENCY">
-            <shadow type="math_number">
-                <field name="NUM">
-                    440
-                </field>
-            </shadow>
-        </value>
-        <value name="DURATION">
-            <shadow type="math_number">
-                <field name="NUM">
-                    100
-                </field>
-            </shadow>
-        </value>
-    </block>`
-    },
+    leaphyBuzzBlock,
     sep,
-    {
-        kind: "block",
-        type: "leaphy_serial_print_line",
-        blockxml: `<block type="leaphy_serial_print_line">
-        <value name="VALUE">
-            <shadow type="text">
-                <field name="TEXT">text</field>
-            </shadow>
-        </value>
-    </block>`
-    },
-    sep,
-    {
-        kind: "block",
-        type: "leaphy_serial_print_value",
-        blockxml: `<block type="leaphy_serial_print_value">
-        <value name="NAME">
-            <shadow type="text">
-                <field name="TEXT">text</field>
-            </shadow>
-        </value>
-        <value name="VALUE">
-            <shadow type="math_number">
-                <field name="NUM">
-                    0
-                </field>
-            </shadow>
-        </value>
-    </block>`
-    },
+    ...leaphySerialBlocks,
     sep,
     {
         kind: "block",
         type: "leaphy_original_get_distance"
     },
     sep,
-    {
-        kind: "block",
-        type: "leaphy_original_digital_read"
-    },
-    sep,
-    {
-        kind: "block",
-        type: "leaphy_original_analog_read"
-    }
+    ...leaphyDigitalAnalogReadBlocks
 ]
 
-export default leaphyOriginalBlocks;
+export const leaphyOriginalExtraBlocks = [
+    leaphyIoDigitalWriteBlock,
+    sep,
+    leaphyIoAnalogWriteBlock,
+    sep,
+    leaphyServoWriteBlock,
+    sep,
+    leaphySonarBlock,
+    ...leaphyRgbBlocks,
+    ...leaphyLedBlocks
+]
