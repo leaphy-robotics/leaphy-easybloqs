@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import styles from '../../styles/Editor.module.css'
 
 import { origToolbox, flitzToolbox, clickToolbox } from '../../toolboxes/toolboxes'
+import Header from '../../components/header/header';
 
 
 const initialXml =
@@ -129,12 +130,14 @@ const Robot: NextPage = () => {
     }
 
     return (
-
-        <div className={styles.blocklyContainer}>
-            <div ref={blocklyRef} className={styles.blocklyView} />
-            <div className={styles.codeView}>
-                <div><Button onClick={onUploadClicked} color="inherit">Upload</Button></div>
-                <div>{code}</div>
+        <div>
+            <Header></Header>
+            <div className={styles.blocklyContainer}>
+                <div ref={blocklyRef} className={styles.blocklyView} />
+                <div className={styles.codeView}>
+                    <div><Button onClick={onUploadClicked} color="inherit">Upload</Button></div>
+                    <div>{code}</div>
+                </div>
             </div>
         </div>
     )
