@@ -1,9 +1,9 @@
 .container {
-    background-color: var(--primary);
+    background-color: var(--leaphy-color-primary);
     height: 64px;
     padding: 0 16px;
     display: flex;
-}
-.logo {
-    vertical-align: middle;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }

@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
+import Header from '../components/header/header'
 
 const Home: NextPage = () => {
 
@@ -14,6 +15,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <div className={styles.header}>
+        <Header onUploadClicked={undefined}></Header>
+      </div>
+
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to Leaphy Easybloqs!
@@ -24,32 +29,32 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <Link href="/blockly/orig">
-              <a>
+
+          <Link href="/blockly/orig">
+            <a>
+              <div className={styles.card}>
                 <Image src="/orig.svg" alt="Leaphy Original Icon" width={180} height={180} />
                 Leaphy Original
-              </a>
-            </Link>
-          </div>
-
-          <div className={styles.card}>
-            <Link href="/blockly/flitz" >
-              <a>
+              </div>
+            </a>
+          </Link>
+          <Link href="/blockly/flitz" >
+            <a>
+              <div className={styles.card}>
                 <Image src="/flitz.svg" alt="Leaphy Flitz Icon" width={180} height={180} />
                 Leaphy Flitz
-              </a>
-            </Link>
-          </div>
-
-          <div className={styles.card}>
-            <Link href="/blockly/click" >
-              <a>
+              </div>
+            </a>
+          </Link>
+          <Link href="/blockly/click" >
+            <a>
+              <div className={styles.card}>
                 <Image src="/click.svg" alt="Leaphy Click Icon" width={180} height={180} />
                 Leaphy Click
-              </a>
-            </Link>
-          </div>
+              </div>
+            </a>
+          </Link>
+
         </div>
       </main>
 

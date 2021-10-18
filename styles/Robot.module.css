@@ -1,0 +1,23 @@
+.container {
+  min-height: 100vh;
+    display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100vh;
+  width: 100vw;
+  overflow:hidden;
+
+}
+.blocklyContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: calc(100% - 64px);
+  width: 100vw;
+}
+
+.blocklyView {
+  height: 100%;
+  display: block;
+  width: 100%;
+}
