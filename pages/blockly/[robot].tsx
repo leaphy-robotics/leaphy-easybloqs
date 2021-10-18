@@ -1,14 +1,15 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
 import { useRef, useState, useEffect } from 'react'
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
-import Button from '@material-ui/core/Button';
-import styles from '../../styles/Editor.module.css'
+import styles from '../../styles/Robot.module.css'
 
 import { origToolbox, flitzToolbox, clickToolbox } from '../../toolboxes/toolboxes'
+import Header from '../../components/header/header';
 
 
 const initialXml =
@@ -119,6 +120,24 @@ const Robot: NextPage = () => {
     useBlocklyWorkspace({
         ref: blocklyRef,
         toolboxConfiguration: toolbox,
+        workspaceConfiguration: {
+            scrollbars: true,
+            zoom: {
+                controls: true,
+                wheel: false,
+                startScale: 0.8,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2,
+            },
+            trashcan: true,
+            move: {
+                scrollbars: true,
+                drag: true,
+                wheel: true,
+            },
+            renderer: "zelos",
+        },
         initialXml: initialXml,
         className: "fill-height",
         onWorkspaceChange: onWorkspaceChange
@@ -129,13 +148,19 @@ const Robot: NextPage = () => {
     }
 
     return (
+        <div className={styles.container}>
+            <Head>
+                <title>Leaphy Easybloqs</title>
+                <meta name="description" content="Program Leaphy Robots!" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <main>
+                <Header onUploadClicked={onUploadClicked}></Header>
+                <div className={styles.blocklyContainer}>
+                    <div ref={blocklyRef} className={styles.blocklyView} />
+                </div>
+            </main>
 
-        <div className={styles.blocklyContainer}>
-            <div ref={blocklyRef} className={styles.blocklyView} />
-            <div className={styles.codeView}>
-                <div><Button onClick={onUploadClicked} color="inherit">Upload</Button></div>
-                <div>{code}</div>
-            </div>
         </div>
     )
 }

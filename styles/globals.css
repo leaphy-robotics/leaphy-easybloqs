@@ -1,9 +1,11 @@
 html,
 body {
-  padding: 0;
+  height: 100%;
+  background-color: #f1f1f1;
+}
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 a {
@@ -14,3 +16,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --leaphy-color-primary: #06778f;
+  --leaphy-color-secundary: #32a5a9;
+  --leaphy-color-light: #ffffff;
+}
+
