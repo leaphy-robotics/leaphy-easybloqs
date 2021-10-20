@@ -43,8 +43,36 @@ const Robot: NextPage = () => {
 
         if (!isUploadClicked) return;
 
+        const connectToBoard = async (): Promise<boolean> => {
+
+            const AvrgirlArduino = require("../../libs/avrgirl-arduino.min.js")
+
+            const avrgirl = new AvrgirlArduino({
+                board: 'uno',
+                debug: true
+            });
+
+            const promise = new Promise<any>((resolve, reject) => {
+                avrgirl.connection._init((err: any) => {
+                    if (err) {
+                        console.error(err);
+                        return reject(err);
+                    }
+                    avrgirl.connection._pollForOpen((err: any) => {
+                        if (err) {
+                            console.error(err);
+                            return reject(err);
+                        }
+                        resolve(avrgirl);
+                    });
+                });
+            })
+
+            return promise;
+        }
+
         const compile = async (): Promise<Blob> => {
-            console.log('gonna compile da codez');
+            console.log('Starting Cloud Compilation');
 
             const payload = {
                 sketch: code
@@ -73,8 +101,8 @@ const Robot: NextPage = () => {
             return await binaryFetchResponse.blob();
         }
 
-        const flashBoard = (blob: Blob) => {
-            console.log('Totally flashing this board man');
+        const flashBoard = (blob: Blob, avrgirl: any) => {
+            console.log('Starting Board Flash');
 
             const reader = new FileReader();
             reader.readAsArrayBuffer(blob);
@@ -85,16 +113,9 @@ const Robot: NextPage = () => {
                     return;
                 };
 
-                const filecontents = event.target.result;
+                const fileContents = event.target.result;
 
-                const AvrgirlArduino = require("../../libs/avrgirl-arduino.min.js")
-
-                const avrgirl = new AvrgirlArduino({
-                    board: 'uno',
-                    debug: true
-                });
-
-                avrgirl.flash(filecontents, (error: any) => {
+                avrgirl.flash(fileContents, (error: any) => {
                     if (error) {
                         console.error(error);
                     } else {
@@ -104,7 +125,9 @@ const Robot: NextPage = () => {
             };
         }
 
-        compile().then(blob => flashBoard(blob));
+        Promise.all([connectToBoard(), compile()]).then(([avrgirl, hexFileBlob]) => {
+            if (avrgirl) flashBoard(hexFileBlob, avrgirl);
+        })
 
         setIsUploadClicked(false);
 
