@@ -1,8 +1,8 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../../styles/Header.module.css'
 import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { LinearProgress, Link } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

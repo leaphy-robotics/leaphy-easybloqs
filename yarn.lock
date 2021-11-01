@@ -325,6 +325,11 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
+"@types/w3c-web-serial@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/w3c-web-serial/-/w3c-web-serial-1.0.2.tgz#8bf21f90b40dda6d2e2e6b188417b6bd66525d03"
+  integrity sha512-Ftx4BtLxgAnel7V7GbHylCYjSq827A+jeEE3SnTS7huCGUN0pSwUn+CchTCT9TkZj9w+NVMUq4Bk2R0GvUNmAQ==
+
 "@typescript-eslint/parser@^4.20.0":
   version "4.33.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-4.33.0.tgz#dfe797570d9694e560528d18eecad86c8c744899"
@@ -567,6 +572,11 @@ astral-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
+
+async-es@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/async-es/-/async-es-3.2.1.tgz#ca30be6dc7b6d4bb7f0338425feca4f23ac18a8d"
+  integrity sha512-J01d1aW25KiSon8JDNBDd4Ya6JT+lGRgcU1LAYdI14emuXSHLibWC4YJUWu0lDjLBZkY1v4o5rSBQt/ndelb0g==
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -1944,6 +1954,11 @@ inflight@^1.0.4:
   dependencies:
     once "^1.3.0"
     wrappy "1"
+
+inherits-ex@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/inherits-ex/-/inherits-ex-1.3.5.tgz#2e25e7fc933eb3570a55d197793682e0c01cd3a6"
+  integrity sha512-AQfnshKJLLn2h0SSjJYzF/xTnSOf/hYJ2v/V7+1dAS13cN2RWwcqmCxnivi9RTDidMcmsMxelTIBHOi87ZVlsQ==
 
 inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.1, inherits@~2.0.3, inherits@~2.0.4:
   version "2.0.4"

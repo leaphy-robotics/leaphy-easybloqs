@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect,useCallback, useMemo } from 'react'
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import styles from '../../styles/Robot.module.css'
@@ -11,6 +11,8 @@ import styles from '../../styles/Robot.module.css'
 import { origToolbox, flitzToolbox, clickToolbox } from '../../toolboxes/toolboxes'
 import Header from '../../components/header/header';
 
+import { WebSerial } from '../../webserial/webserial';
+import { AvrgirlArduino } from '../../webserial/avrgirl-arduino';
 
 const initialXml =
     `<xml xmlns="https://developers.google.com/blockly/xml">
@@ -39,37 +41,19 @@ const Robot: NextPage = () => {
     const [code, setCode] = useState<string>('');
     const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
 
+    const webSerial = useMemo(() => new WebSerial(),[])
+
+    // const connectOnLoad = useCallback(async () => {
+    //     await webSerial.getConnection({});
+    // }, [webSerial]);
+
+    // useEffect(() => {
+    //     connectOnLoad();
+    // }, [connectOnLoad])
+
     useEffect(() => {
 
         if (!isUploadClicked) return;
-
-        const connectToBoard = async (): Promise<boolean> => {
-
-            const AvrgirlArduino = require("../../libs/avrgirl-arduino.min.js")
-
-            const avrgirl = new AvrgirlArduino({
-                board: 'uno',
-                debug: true
-            });
-
-            const promise = new Promise<any>((resolve, reject) => {
-                avrgirl.connection._init((err: any) => {
-                    if (err) {
-                        console.error(err);
-                        return reject(err);
-                    }
-                    avrgirl.connection._pollForOpen((err: any) => {
-                        if (err) {
-                            console.error(err);
-                            return reject(err);
-                        }
-                        resolve(avrgirl);
-                    });
-                });
-            })
-
-            return promise;
-        }
 
         const compile = async (): Promise<Blob> => {
             console.log('Starting Cloud Compilation');
@@ -101,7 +85,7 @@ const Robot: NextPage = () => {
             return await binaryFetchResponse.blob();
         }
 
-        const flashBoard = (blob: Blob, avrgirl: any) => {
+        const flashBoard = (blob: Blob) => {
             console.log('Starting Board Flash');
 
             const reader = new FileReader();
@@ -113,25 +97,26 @@ const Robot: NextPage = () => {
                     return;
                 };
 
-                const fileContents = event.target.result;
+                const fileContents = event.target.result as ArrayBuffer;
 
-                avrgirl.flash(fileContents, (error: any) => {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        console.info("flash successful");
+                const avrGirl = new AvrgirlArduino();
+                avrGirl.flash(fileContents, (err) => {
+                    if(err){
+                        console.log('Error while flashing', err)
+                        throw err;
                     }
-                });
+                    console.log('Flash succesful')!
+                })
             };
         }
 
-        Promise.all([connectToBoard(), compile()]).then(([avrgirl, hexFileBlob]) => {
-            if (avrgirl) flashBoard(hexFileBlob, avrgirl);
+        compile().then(hexFileBlob => {
+           flashBoard(hexFileBlob);
         })
 
         setIsUploadClicked(false);
 
-    }, [isUploadClicked, code])
+    }, [isUploadClicked, code, webSerial])
 
     const blocklyRef = useRef(null);
 
