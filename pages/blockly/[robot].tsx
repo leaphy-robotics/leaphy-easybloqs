@@ -37,11 +37,33 @@ const Robot: NextPage = () => {
     const toolbox = selectToolbox(robot as string);
 
     const [code, setCode] = useState<string>('');
+    
     const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
 
     useEffect(() => {
 
         if (!isUploadClicked) return;
+
+        let avrgirl: any = {};
+
+        const connect = async (): Promise<void> => {
+            const AvrgirlArduino = require("../../node_modules/avrgirl/avrgirl-arduino.js").AvrgirlArduino
+
+            avrgirl = new AvrgirlArduino({
+                board: 'uno',
+                debug: true
+            });
+        
+            avrgirl.connect((error: any) => {
+                if (error) {
+                    console.error(error);
+                    return Promise.reject(error);
+                } else {
+                    console.info("connection successful");
+                    return Promise.resolve();
+                }
+            });
+        }
 
         const compile = async (): Promise<Blob> => {
             console.log('gonna compile da codez');
@@ -87,14 +109,7 @@ const Robot: NextPage = () => {
 
                 const filecontents = event.target.result;
 
-                const AvrgirlArduino = require("../../libs/avrgirl-arduino.min.js")
-
-                const avrgirl = new AvrgirlArduino({
-                    board: 'uno',
-                    debug: true
-                });
-
-                avrgirl.flash(filecontents, (error: any) => {
+                avrgirl.flash2(filecontents, (error: any) => {
                     if (error) {
                         console.error(error);
                     } else {
@@ -104,7 +119,7 @@ const Robot: NextPage = () => {
             };
         }
 
-        compile().then(blob => flashBoard(blob));
+        Promise.all([connect(), compile()]).then(([_, blob]) => flashBoard(blob));
 
         setIsUploadClicked(false);
 
