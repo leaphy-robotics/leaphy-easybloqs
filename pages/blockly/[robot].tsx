@@ -119,6 +119,8 @@ const Robot: NextPage = () => {
             };
         }
 
+        // Why doesn't it wait for connect to complete? Probably because of that callback
+        // Maybe we can make connect() return a Promise
         Promise.all([connect(), compile()]).then(([_, blob]) => flashBoard(blob));
 
         setIsUploadClicked(false);
