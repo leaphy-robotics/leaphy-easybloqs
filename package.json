@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
+    "leaphy-avrgirl-arduino": "^0.0.1",
     "leaphy-react-blockly": "^0.0.9",
     "next": "11.1.2",
     "react": "17.0.2",

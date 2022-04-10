@@ -10,6 +10,7 @@ import styles from '../../styles/Robot.module.css'
 
 import { origToolbox, flitzToolbox, clickToolbox } from '../../toolboxes/toolboxes'
 import Header from '../../components/header/header';
+import AvrgirlArduino from 'leaphy-avrgirl-arduino';
 
 
 const initialXml =
@@ -37,7 +38,7 @@ const Robot: NextPage = () => {
     const toolbox = selectToolbox(robot as string);
 
     const [code, setCode] = useState<string>('');
-    
+
     const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
 
     useEffect(() => {
@@ -47,26 +48,20 @@ const Robot: NextPage = () => {
         let avrgirl: any = {};
 
         const connect = async (): Promise<void> => {
-            const AvrgirlArduino = require("../../node_modules/avrgirl/avrgirl-arduino.js").AvrgirlArduino
+            console.log("Starting Connect");
 
             avrgirl = new AvrgirlArduino({
                 board: 'uno',
                 debug: true
             });
-        
-            avrgirl.connect((error: any) => {
-                if (error) {
-                    console.error(error);
-                    return Promise.reject(error);
-                } else {
-                    console.info("connection successful");
-                    return Promise.resolve();
-                }
-            });
+
+            await avrgirl.connectAsync();
+
+            console.log('Connect succesful');
         }
 
         const compile = async (): Promise<Blob> => {
-            console.log('gonna compile da codez');
+            console.log('Starting Compile');
 
             const payload = {
                 sketch: code
@@ -90,13 +85,16 @@ const Robot: NextPage = () => {
             }
 
             const responseJson = await compileResponse.json();
-            console.log(responseJson);
+
             const binaryFetchResponse = await fetch(responseJson.binaryLocation);
-            return await binaryFetchResponse.blob();
+
+            console.log('Compile successful');
+
+            return binaryFetchResponse.blob();
         }
 
         const flashBoard = (blob: Blob) => {
-            console.log('Totally flashing this board man');
+            console.log('Starting Flash');
 
             const reader = new FileReader();
             reader.readAsArrayBuffer(blob);
@@ -109,18 +107,11 @@ const Robot: NextPage = () => {
 
                 const filecontents = event.target.result;
 
-                avrgirl.flash2(filecontents, (error: any) => {
-                    if (error) {
-                        console.error(error);
-                    } else {
-                        console.info("flash successful");
-                    }
-                });
+                console.log("Flashing!")
+                await avrgirl.flashAsync(filecontents);
             };
         }
 
-        // Why doesn't it wait for connect to complete? Probably because of that callback
-        // Maybe we can make connect() return a Promise
         Promise.all([connect(), compile()]).then(([_, blob]) => flashBoard(blob));
 
         setIsUploadClicked(false);
