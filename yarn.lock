@@ -2599,10 +2599,10 @@ language-tags@^1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
-leaphy-avrgirl-arduino@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/leaphy-avrgirl-arduino/-/leaphy-avrgirl-arduino-0.0.1.tgz#4673502c1719bfbbcf42a08af878fa9769eda733"
-  integrity sha512-Ddlre8zOwYKc1dq/Lw3HSJdiGJN8b2jkR3iZytBX061DqvaIqFESFc+v2vklUeT3dYX4/c6gVK9Euejy+R8jAw==
+leaphy-avrgirl-arduino@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/leaphy-avrgirl-arduino/-/leaphy-avrgirl-arduino-0.0.2.tgz#f5924293df826d45279b1197eacb633f471365de"
+  integrity sha512-bkQ2ftmP/B6emHw29GatB/LzdbHgz1pUWNuYMaq7ulZpflbAqYV1EUzTD5QWQNqr9I3Fe99I8sJIgHr+WUcsBg==
   dependencies:
     async "^2.6.3"
     awty "^0.1.0"

@@ -93,7 +93,7 @@ const Robot: NextPage = () => {
             return binaryFetchResponse.blob();
         }
 
-        const flashBoard = (blob: Blob) => {
+        const flashBoard = async (blob: Blob) => {
             console.log('Starting Flash');
 
             const reader = new FileReader();
@@ -107,8 +107,17 @@ const Robot: NextPage = () => {
 
                 const filecontents = event.target.result;
 
+                const serialDataHandler = (uint8array: Uint8Array) => {
+                    var string = new TextDecoder().decode(uint8array);
+                    console.log(string);
+                }
+
+                avrgirl.connection.serialPort.removeListener("data", serialDataHandler)
+
                 console.log("Flashing!")
                 await avrgirl.flashAsync(filecontents);
+
+                avrgirl.connection.serialPort.on("data", serialDataHandler);
             };
         }
 
